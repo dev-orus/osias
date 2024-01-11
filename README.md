@@ -26,6 +26,8 @@ npm install osias
     ```
 - ## Send changes
 ```bash
-git commit -am "{message}"; git push origin {branch-name}
+git checkout -b {branch-name}
+git commit -am "{message}"
+git push origin {branch-name}
 ```
 Also remember to change the {message} and {branch-name} with your actual message/branch-name
