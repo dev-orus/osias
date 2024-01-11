@@ -89,6 +89,7 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
+# TypeScript build output
 dist
 
 # Gatsby files
@@ -128,3 +129,18 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# TypeScript configuration
+tsconfig.json
+
+# IDE-specific files (e.g., Visual Studio Code)
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.idea/
+
+# Log files
+*.log
+
+# Dependency lock file
+yarn.lock
