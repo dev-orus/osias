@@ -3,14 +3,23 @@
   "version": "1.0.0",
   "description": "Osias is a next-level all in one TUI app Ranging from Games to Web",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "tsc; node dist/index.js",
-    "install": "tsc --init --sourceMap -rootDir src --outDir dist; npm i --save-dev typescript"
+    "start": "tsc; node dist",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
-  "license": "MIT",
+  "license": "ISC",
   "devDependencies": {
+    "@types/node": "^20.11.0",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "child_process": "^1.0.2",
+    "enquirer": "^2.4.1",
+    "get-cursor-position": "^2.0.0",
+    "keypress": "^0.2.1"
   }
 }
