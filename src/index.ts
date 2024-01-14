@@ -1,1 +1,1 @@
-console.log('Hello, World!');
+import { menu } from "./osiasTui.js";
