@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "tsc; node dist",
-    "build": "tsc"
+    "build": "tsc",
+    "install": "sh dev/install.sh"
   },
   "keywords": [],
   "author": "",
