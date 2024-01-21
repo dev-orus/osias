@@ -1,12 +1,6 @@
 # Osias
 Osias is a next-level all in one TUI app Ranging from Games to Web
 
-## How to install
-<!-- - download the [latest release](https://github.com/OrusNet/Orus/releases) for your OS -->
-```bash
-npm install osias
-```
-
 ## How to contribute
 - ## clone the repo
 
@@ -20,9 +14,9 @@ npm install osias
     git clone https://github.com/osias-dev/Osias.git
     ```
 
-- ## initialize using npm.
+- ## initialize using cargo.
     ```bash
-    npm install
+    cargo build
     ```
 - ## Send changes
 ```bash
@@ -30,4 +24,4 @@ git checkout -b {branch-name}
 git commit -am "{message}"
 git push origin {branch-name}
 ```
-Also remember to change the {message} and {branch-name} with your actual message/branch-name
+Also remember to change the {message} and {branch-name} with your actual message/branch-name. And do not use master as the branch-name
