@@ -144,3 +144,7 @@ tsconfig.json
 
 # Dependency lock file
 yarn.lock
+
+# Added by cargo
+
+/target
