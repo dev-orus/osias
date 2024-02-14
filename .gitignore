@@ -131,7 +131,7 @@ dist
 .pnp.*
 
 # TypeScript configuration
-tsconfig.json
+# tsconfig.json
 
 # IDE-specific files (e.g., Visual Studio Code)
 .vscode/
@@ -144,7 +144,3 @@ tsconfig.json
 
 # Dependency lock file
 yarn.lock
-
-# Added by cargo
-
-/target
