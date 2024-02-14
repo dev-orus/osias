@@ -4,6 +4,10 @@
   "description": "Osias is a next-level all in one TUI app Ranging from Games to Web",
   "main": "dist/index.js",
   "type": "module",
+  "prettier": {
+    "tabWidth": 2,
+    "singleQuote": true
+  },
   "scripts": {
     "start": "tsc; node dist/index.js",
     "build": "tsc"
@@ -16,7 +20,6 @@
     "node-ts": "^6.0.1"
   },
   "devDependencies": {
-    "@types/keyboardjs": "^2.5.3",
     "@types/node": "^20.11.17"
   }
 }
