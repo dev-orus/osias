@@ -21,6 +21,15 @@ import { Osias } from './osiasApi.js';
 
 const osias = new Osias();
 
-console.log(await osias.menu(['a', 'b', 'c']));
+while (true) {
+  let items = Object.keys(osias.menuItems);
+  let [index, key] = await osias.menu(items);
+  let item = osias.menuItems[items[index]];
+  if (key.name === 'return') {
+    await item.call();
+  } else if (key.name === 'escape') {
+    process.exit();
+  }
+}
 
 process.exit();

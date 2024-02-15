@@ -16,10 +16,12 @@ Osias api is the TUI library for Osias and many more!
 
 */
 
-// import * as readline from 'readline';
+import * as readline from 'readline';
 
-// readline.emitKeypressEvents(process.stdin);
-// process.stdin.setEncoding('utf8');
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 
 if (process.stdin.isTTY) {
   process.stdin.setRawMode!(true);
@@ -46,7 +48,7 @@ function countNewlines(text: string): number {
   return count;
 }
 
-const KEY_TABLE: { [key: string]: string } = {
+const SEQUENCE_TABLE: { [key: string]: string } = {
   '\x1b': 'escape',
   '\x1b[A': 'up',
   '\x1b[B': 'down',
@@ -65,31 +67,26 @@ interface Key {
   shift?: boolean | undefined;
 }
 
-// export function readKey(): Promise<Key> {
-// return new Promise((resolve) => {
-// process.stdin.once('keypress', (char: string, key: Key) => {
-//   resolve(key);
-// });
-// process.stdin.once('keypress', (char: string, key: Key) => {
-//   console.log(char, 3);
-//   resolve(key);
-// });
-// });
-// }
-
 function readKey(): Promise<Key> {
   return new Promise((resolve) => {
     process.stdin.setEncoding('utf8');
     process.stdin.once('data', (chunk) => {
       resolve({
-        name: KEY_TABLE[chunk.toString()],
+        name: SEQUENCE_TABLE[chunk.toString()],
         sequence: chunk.toString(),
       });
     });
   });
 }
 
+type MenuItem = {
+  items: { [key: string]: MenuItem };
+  call: Function;
+  handler: string;
+};
+
 export class Osias {
+  // Theme
   theme = {
     menu: {
       selected: '\x1b[32m❯ {*}',
@@ -97,15 +94,23 @@ export class Osias {
       normal: '\x1b[31m{*}',
     },
   };
-  // The root menu items
-  rootIems: { [key: string]: Function } = {
+  // The menu items (Any plugin or mod should add items here by indexing)
+  menuItems: { [key: string]: MenuItem } = {
     // Servers menu
-    Servers: () => {
-      console.log('Feature Comming soon!');
+    Servers: {
+      items: {},
+      handler: 'root',
+      call: () => {
+        console.log('Feature Comming soon!');
+      },
     },
     // Themes and configs Menu
-    'Customizations & Options': async () => {
-      await this.menu(['Themes', 'Config', 'Keybindings']);
+    'Customizations & Options': {
+      items: {},
+      handler: 'root',
+      call: async () => {
+        await this.menu(['Themes', 'Config', 'Keybindings']);
+      },
     },
   };
   constructor() {}
@@ -128,7 +133,7 @@ export class Osias {
     // if there is a title passed as an argument
     if (title) {
       minIndex =
-        2 +
+        1 +
         countNewlines(
           insertNewlines(
             this.theme.menu.title.replace('{*}', title),
@@ -160,7 +165,7 @@ export class Osias {
     const render = () => {
       // remove the last selected line
       process.stdout.write(
-        `\x1b[${minIndex + lastIndex};${0}H` +
+        `\x1b[${minIndex + lastIndex};0H` +
           '\x1b[0m' +
           ' '.repeat(
             this.theme.menu.selected.replace('{*}', items[lastIndex]).length
@@ -169,20 +174,20 @@ export class Osias {
       );
       // make the last selected line normal
       process.stdout.write(
-        `\x1b[${minIndex + lastIndex};${0}H` +
+        `\x1b[${minIndex + lastIndex};0H` +
           cursorSpaces +
           '\x1b[0m' +
           this.theme.menu.normal.replace('{*}', items[lastIndex])
       );
       // remove the new selected line
       process.stdout.write(
-        `\x1b[${minIndex + index};${0}H` +
+        `\x1b[${minIndex + index};0H` +
           '\x1b[0m' +
           ' '.repeat((cursorSpaces + items[index]).length)
       );
       // make the new selected line with the selected state
       process.stdout.write(
-        `\x1b[${minIndex + index};${0}H` +
+        `\x1b[${minIndex + index};0H` +
           '\x1b[0m' +
           this.theme.menu.selected.replace('{*}', items[index]) +
           '\x1b[0m'
@@ -205,7 +210,7 @@ export class Osias {
         render();
       } else {
         // if the keys is anything else (return, escape, eg)
-        process.stdout.write(`\x1b[${items.length + 1};${0}H\x1b[0m\n`);
+        process.stdout.write(`\x1b[${minIndex + items.length};0H\x1b[0m\n`);
         return [index, key];
       }
     }
