@@ -24,19 +24,21 @@ const osias = new Osias();
 
 const game = new Game();
 
-const player1 = new Entity(game, { main: '\x1b[31m█████\n\x1b[31m█████\n\x1b[31m█████' });
-
-player1.render();
+const player1 = new Entity(game, {
+  main: '\x1b[31m█████\n\x1b[31m█████\n\x1b[31m█████',
+});
 
 osias.menuItems.Game = {
   handler: 'GameEngine',
   call: async () => {
-    let run = game.run(60, '');
-    player1.velocity.x = 1;
+    game.run(60, '');
+    player1.velocity.sety(-5);
+    player1.velocity.setx(5);
     await sleep(1000);
-    player1.velocity.x = -1;
+    player1.velocity.sety(5);
+    player1.velocity.setx(-5);
     await sleep(1000);
-    clearInterval(run);
+    game.stop();
   },
 };
 
