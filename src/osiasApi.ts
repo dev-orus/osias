@@ -80,7 +80,7 @@ function readKey(): Promise<Key> {
 }
 
 type MenuItem = {
-  items: { [key: string]: MenuItem };
+  items?: { [key: string]: MenuItem };
   call: Function;
   handler: string;
 };

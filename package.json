@@ -3,6 +3,12 @@
   "version": "0.0.1",
   "description": "Osias is a next-level all in one TUI app Ranging from Games to Web",
   "main": "dist/index.js",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "file://LICENSE"
+    }
+  ],
   "type": "module",
   "prettier": {
     "tabWidth": 2,
@@ -17,9 +23,13 @@
   "license": "ISC",
   "dependencies": {
     "@types/cordova-plugin-keyboard": "^1.2.3",
-    "node-ts": "^6.0.1"
+    "node-ts": "^6.0.1",
+    "prompt-sync": "^4.2.0",
+    "robotjs": "^0.6.0",
+    "set-interval-async": "^3.0.3"
   },
   "devDependencies": {
-    "@types/node": "^20.11.17"
+    "@types/node": "^20.11.19",
+    "@types/prompt-sync": "^4.2.3"
   }
 }
