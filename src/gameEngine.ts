@@ -1,5 +1,3 @@
-import { setIntervalAsync } from 'set-interval-async';
-
 export type Velocity = {
   x: number;
   y: number;

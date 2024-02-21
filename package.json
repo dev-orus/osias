@@ -22,11 +22,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/blessed": "^0.1.25",
     "@types/cordova-plugin-keyboard": "^1.2.3",
+    "@types/ws": "^8.5.10",
     "node-ts": "^6.0.1",
     "prompt-sync": "^4.2.0",
     "robotjs": "^0.6.0",
-    "set-interval-async": "^3.0.3"
+    "set-interval-async": "^3.0.3",
+    "ws": "^8.16.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.19",
