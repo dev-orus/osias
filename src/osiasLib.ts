@@ -1,18 +1,18 @@
 /*
-   ____   _____ _____           _____              _____ _____ 
-  / __ \ / ____|_   _|   /\    / ____|       /\   |  __ \_   _|
- | |  | | (___   | |    /  \  | (___ ______ /  \  | |__) || |  
- | |  | |\___ \  | |   / /\ \  \___ \______/ /\ \ |  ___/ | |  
- | |__| |____) |_| |_ / ____ \ ____) |    / ____ \| |    _| |_ 
-  \____/|_____/|_____/_/    \_\_____/    /_/    \_\_|   |_____|
-                                                               
+   ____   _____ _____           _____       _      _____ ____  
+  / __ \ / ____|_   _|   /\    / ____|     | |    |_   _|  _ \ 
+ | |  | | (___   | |    /  \  | (___ ______| |      | | | |_) |
+ | |  | |\___ \  | |   / /\ \  \___ \______| |      | | |  _ < 
+ | |__| |____) |_| |_ / ____ \ ____) |     | |____ _| |_| |_) |
+  \____/|_____/|_____/_/    \_\_____/      |______|_____|____/ 
+
 ---------
 -BY ORUS-
 ---------
 Osias @ 2024 Owned by ORUS
 ----------------------------------------------------------------
 
-Osias api is the TUI library for Osias and many more!
+OsiasLib is the TUI library for Osias and it's plugins or apps
 
 */
 
@@ -62,10 +62,6 @@ const SEQUENCE_TABLE: { [key: string]: string } = {
 
 function removeByIndex(str: string, index: number) {
   return str.substring(0, index) + str.substring(index + 1);
-}
-
-function addByIndex(str: string, toAdd: string, index: number) {
-  return str.substring(0, index) + toAdd + str.substring(index + 1);
 }
 
 function insertStringAt(
@@ -206,6 +202,17 @@ export class Osias {
     },
   };
   api = {
+    login: (user: string, password: string) => {
+      this.user = {
+        type: 'login',
+        username: user,
+        psw: password,
+      };
+
+      this.ws.on('open', () => {
+        this.ws.send(JSON.stringify(this.user));
+      });
+    },
     sendMsg: (msg: string, to: string) => {
       this.ws.send(
         JSON.stringify({
@@ -227,18 +234,8 @@ export class Osias {
   };
   user: any;
   ws: WebSocket;
-  constructor(user: string, password: string) {
+  constructor() {
     this.ws = new WebSocket('ws://localhost:3000');
-
-    this.user = {
-      type: 'login',
-      username: user,
-      psw: password,
-    };
-
-    this.ws.on('open', () => {
-      this.ws.send(JSON.stringify(this.user));
-    });
   }
   // moveCursor function (For placing the cursor at specific x and y)
   moveCursor(x: number, y: number) {
@@ -265,32 +262,6 @@ export class Osias {
           this.moveCursor(process.stdout.columns - i.length, b);
           console.log('\x1b[0m' + i);
         });
-
-        // let l = this.theme.notification.top.length;
-        // let l2 = l - this.theme.notification.side.length * 2;
-        // this.notificationQueue = true;
-        // if (from) {
-        //   this.moveCursor(
-        //     process.stdout.columns - (this.theme.notification.top.length - 2),
-        //     0
-        //   );
-        //   console.log('\x1b[0m' + this.theme.notification.title + from);
-        // }
-        // this.moveCursor(process.stdout.columns - 25, from ? 2 : 0);
-        // console.log('\x1b[0m' + this.theme.notification.top);
-        // formattedMsg.forEach((i, y) => {
-        //   this.moveCursor(process.stdout.columns - 25, 3 + y);
-        //   console.log(
-        //     this.theme.notification.side +
-        //       '\x1b[0m' +
-        //       i +
-        //       ' '.repeat(l2 - i.length) +
-        //       this.theme.notification.side
-        //   );
-        // });
-        // this.moveCursor(process.stdout.columns - 25, 8);
-        // console.log('\x1b[0m' + this.theme.notification.bottom);
-        // console.log('└' + this.theme.notification.bottom.repeat(24) + '┘');
         await sleep(3000);
         this.notificationQueue = false;
         clearIntervalAsync(inv);

@@ -18,9 +18,10 @@ Osias is a TUI application that makes the TUI more fun. with chat and forums
 */
 
 import { Entity, Game, sleep } from './gameEngine.js';
-import { Osias, ReadLine } from './osiasApi.js';
+import { Osias, ReadLine } from './osiasLib.js';
 const rl = new ReadLine();
-const osias = new Osias('<username>', '<password>');
+const osias = new Osias();
+osias.api.login('<username>', '<password>');
 const game = new Game();
 const player1 = new Entity(game, {
   main: '\x1b[31m█████\n\x1b[31m█████\n\x1b[31m█████',
