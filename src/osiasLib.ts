@@ -16,9 +16,9 @@ OsiasLib is the TUI library for Osias and it's plugins or apps
 
 */
 
-import WebSocket from 'ws';
 import { sleep } from './gameEngine.js';
 import { clearIntervalAsync, setIntervalAsync } from 'set-interval-async';
+import Api from './orusApi.js';
 
 process.stdin.setEncoding('utf-8');
 
@@ -201,41 +201,9 @@ export class Osias {
       },
     },
   };
-  api = {
-    login: (user: string, password: string) => {
-      this.user = {
-        type: 'login',
-        username: user,
-        psw: password,
-      };
-
-      this.ws.on('open', () => {
-        this.ws.send(JSON.stringify(this.user));
-      });
-    },
-    sendMsg: (msg: string, to: string) => {
-      this.ws.send(
-        JSON.stringify({
-          type: 'send-msg',
-          from: this.user.username,
-          psw: this.user.psw,
-          to: to,
-          msg: msg,
-        })
-      );
-    },
-    recv: (): Promise<string> => {
-      return new Promise((r) => {
-        this.ws.once('message', (d) => {
-          r(d.toString());
-        });
-      });
-    },
-  };
-  user: any;
-  ws: WebSocket;
+  api: any;
   constructor() {
-    this.ws = new WebSocket('ws://localhost:3000');
+    this.api = new Api();
   }
   // moveCursor function (For placing the cursor at specific x and y)
   moveCursor(x: number, y: number) {
@@ -301,12 +269,12 @@ export class Osias {
     // Pre-render
     for (let i = 0; i < items.length; i++) {
       if (i == index) {
-        // if the items is the index selected
+        // if the item is the index selected
         console.log(
           '\x1b[0m' + this.theme.menu.selected.replace('{*}', items[i])
         );
       } else {
-        // if the items is normal and not selected
+        // if the item is normal and not selected
         console.log(
           cursorSpaces +
             '\x1b[0m' +

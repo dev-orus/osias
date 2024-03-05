@@ -5,7 +5,6 @@
  | |  | |\___ \  | |   / /\ \  \___ \ 
  | |__| |____) |_| |_ / ____ \ ____) |
   \____/|_____/|_____/_/    \_\_____/ 
-                                      
 
 ---------
 -BY ORUS-
@@ -70,7 +69,7 @@ osias.menuItems.Messages = {
   },
 };
 
-osias.ws.on('message', (d) => {
+osias.api.ws.on('message', (d: any) => {
   let data = JSON.parse(d.toString());
   if (data.type === 'msg') {
     if (osias.usingChat && osias.chat === data.from) {
@@ -91,7 +90,7 @@ while (true) {
   if (key.name === 'return') {
     await item.call();
   } else if (key.name === 'escape') {
-    osias.ws.close();
+    osias.api.ws.close();
     process.exit();
   }
 }
