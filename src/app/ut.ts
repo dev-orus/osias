@@ -1,12 +1,14 @@
 export type Item = {
     type: 'channel' | 'category',
     items: Array<Item>,
-    href?: string,
+    app: React.FC,
     name?: string,
 };
 
 export interface SidebarProps {
     items: Array<Item>;
-    setCurrentPage: Function;
+    setCurrentApp: Function;
+    setIsOpen: Function;
+    isOpen: boolean;
   }
   

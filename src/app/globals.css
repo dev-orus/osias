@@ -32,3 +32,11 @@ body {
     text-wrap: balance;
   }
 }
+
+.app-extension {
+  margin-left: 0px;
+}
+
+.app-extension.open {
+  margin-left: 300px;
+}

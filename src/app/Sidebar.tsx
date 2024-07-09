@@ -5,7 +5,7 @@ import { Item, SidebarProps } from './ut';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 
-export function SideBarItems(items: Array<Item>, setCurrentPage: Function, subitem = false) {
+export function SideBarItems(items: Array<Item>, setCurrentApp: Function, subitem = false) {
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse({
     defaultExpanded: true
   });
@@ -14,21 +14,20 @@ export function SideBarItems(items: Array<Item>, setCurrentPage: Function, subit
       return <div key={i} className='sidebar-category'>
         <div className="category-header" {...getToggleProps()}><a>{v.name}</a></div>
         <div {...getCollapseProps()}>
-          {SideBarItems(v.items, setCurrentPage, true)}
+          {SideBarItems(v.items, setCurrentApp, true)}
         </div>
       </div>
     } else {
       if (subitem) {
-        return <li key={i} className='sidebar-channel' style={{marginLeft: '5px'}}><a onClick={() => setCurrentPage()}>{v.name}</a></li>
+        return <div key={i} className='sidebar-channel' style={{marginLeft: '5px'}} onClick={() => setCurrentApp(v)}><a>{v.name}</a></div>
       } else {
-        return <li key={i} className='sidebar-channel'><a href="/">{v.name}</a></li>
+        return <div key={i} className='sidebar-channel' onClick={() => setCurrentApp(v)}><a>{v.name}</a></div>
       }
     }
   })
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ items, setCurrentPage }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+const Sidebar: React.FC<SidebarProps> = ({ items, setCurrentApp, setIsOpen, isOpen }) => {
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse({
     defaultExpanded: false
   });
@@ -55,7 +54,7 @@ const Sidebar: React.FC<SidebarProps> = ({ items, setCurrentPage }) => {
       {/* <li className='sidebar-srv'><a>My Server</a></li> */}
       <nav className="sidebar-nav">
         <ul>
-          {SideBarItems(items, setCurrentPage)}
+          {SideBarItems(items, setCurrentApp)}
         </ul>
       </nav>
     </div>

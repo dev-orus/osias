@@ -36,6 +36,7 @@
   }
 
   .sidebar-channel {
+    margin-left: 9px;
     margin-top: 3px;
     list-style-type: none;
     padding: 0;
@@ -59,13 +60,12 @@
   }
 
   .sidebar-category {
-    margin-top: 30px;
     list-style-type: none;
     padding: 0;
-    margin: 5px 0;
     color: #9b9b9b;
     text-decoration: none;
     font-size: 15px;
+    margin-top: 3px;
     margin-left: 9px;
   }
   .category-header {
